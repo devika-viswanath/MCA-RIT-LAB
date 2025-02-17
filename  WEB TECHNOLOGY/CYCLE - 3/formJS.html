@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Form Validation</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            width: 100%;
+        }
+
+        h1 {
+            margin: 3rem 0;
+            text-align: center;
+        }
+
+        .table1 {
+            margin: 3rem auto;
+            width: calc(90% - 2rem);
+        }
+
+        .table1 td,
+        .table2 td,
+        th {
+            padding: .5rem;
+        }
+
+        .table2 tr {
+            text-align: center;
+        }
+
+        .table1 .buttons {
+            text-align: center;
+        }
+
+        .table1 .buttons input {
+            margin-right: 1rem;
+            padding: .5rem 1rem;
+        }
+
+        .error {
+            color: red;
+            font-size: 0.9rem;
+        }
+
+        .table1 tr td:nth-of-type(1) {
+            width: 33.33%;
+        }
+
+        .table1 tr td:nth-of-type(2) input {
+            width: calc(100% - 2rem);
+            padding: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Student Registration Form</h1>
+    <form id="registrationForm">
+        <table border="1" class="table1">
+            <tr>
+                <td>Name</td>
+                <td>
+                    <input type="text" id="name" maxlength="30">
+                    <span class="error" id="nameError"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>EMAIL ID</td>
+                <td>
+                    <input type="email" id="email">
+                    <span class="error" id="emailError"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>MOBILE NUMBER</td>
+                <td>
+                    <input type="tel" id="mobile" maxlength="10">
+                    <span class="error" id="mobileError"></span>
+                </td>
+            </tr>
+            <tr class="buttons">
+                <td colspan="2">
+                    <input type="button" value="Submit" onclick="validateForm()">
+                    <input type="reset" onclick="clearErrors()">
+                </td>
+            </tr>
+        </table>
+    </form>
+
+    <script>
+        function clearErrors() {
+            document.getElementById("nameError").textContent = "";
+            document.getElementById("emailError").textContent = "";
+            document.getElementById("mobileError").textContent = "";
+        }
+
+        function validateForm() {
+            clearErrors()
+
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const mobile = document.getElementById("mobile").value;
+
+            let isValid = true;
+
+            if (name.length === 0 || name.length > 30) {
+                document.getElementById("nameError").textContent = "Name must be between 1 and 30 characters.";
+                isValid = false;
+            }
+
+            const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            if (!emailPattern.test(email)) {
+                document.getElementById("emailError").textContent = "Please enter a valid email address.";
+                isValid = false;
+            }
+
+            const mobilePattern = /^\d{10}$/;
+            if (!mobilePattern.test(mobile)) {
+                document.getElementById("mobileError").textContent = "Mobile number must be a 10-digit number.";
+                isValid = false;
+            }
+
+            if (isValid) {
+                clearErrors()
+                alert("Form submitted successfully!");
+            }
+        }
+    </script>
+</body>
+
+</html>

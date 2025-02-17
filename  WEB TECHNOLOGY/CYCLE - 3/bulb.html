@@ -1,0 +1,33 @@
+<html>
+<head>
+<title> Bulb </title>
+<style>
+  body
+{
+ text-align:center;
+}
+button
+{
+ font-size:20px;
+ color:white;
+ background-color:black;
+ border-radius:10px;
+ }
+</style>
+</head>
+<body>
+<button id ="button1" onclick="lighton()">Trun on the light </button>
+<img id="myimage" width="300">
+<button id="button2" onclick="lightoff()" >Trun off the light</button>
+</body>
+<script>
+function lighton()
+{
+document.getElementById("myimage").src="lighton.jpg";
+}
+function lightoff()
+{
+document.getElementById("myimage").src="lightoff.jpg";
+}
+</script>
+</html>

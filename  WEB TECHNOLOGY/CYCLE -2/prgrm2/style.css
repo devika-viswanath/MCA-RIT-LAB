@@ -1,0 +1,29 @@
+.class-selector
+{
+	color:white;
+	background-color:blue;
+	padding:10px;
+}
+.id-selector
+{
+	color:yellow;
+	background-color:red;
+	padding:10px;
+}
+p
+{
+	color:brown;
+	background-color:pink;
+	padding:10px;
+}
+
+.group-selector
+{
+	color:white;
+	background-color:brown;
+	padding:10px;
+}
+	h1{text-align:center;
+	color:navy;}
+
+

@@ -1,0 +1,60 @@
+body {
+ margin:0; /* Remove default margin */
+
+}
+
+ 
+
+ .sidenav {
+
+    height: 100%; /* Full height */
+
+    width: 160px; /* Fixed width */
+
+    padding-top: 20px; /* Padding at the top */
+
+    background-color: green; /* Background color */
+
+    position: fixed; /* Fixed position */
+
+    top: 0; /* Align to top */
+
+    left: 0; /* Align to left */
+
+}
+
+ 
+
+ .sidenav a {
+
+    display: block; /* Block element */
+
+    text-decoration: none; /* No underline */
+
+    padding: 6px 8px 6px 16px; /* Padding */
+
+    color: white; /* Text color */
+
+}
+
+ 
+
+.sidenav a:hover {
+
+    color: red; /* Highlight color on hover */
+
+}
+
+ 
+
+.main {
+
+    margin-left: 160px; /* Margin same as sidenav width */
+
+    padding: 0 10px; /* Padding on sides */
+
+    height: 2000px; /* Set height */
+
+}
+
+

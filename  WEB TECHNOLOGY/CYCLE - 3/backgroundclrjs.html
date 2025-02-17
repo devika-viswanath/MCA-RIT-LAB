@@ -1,0 +1,43 @@
+<html>
+<head>
+<title> Change Background color </title>
+</head>
+<style>
+.containers
+{
+text-align:center;
+}
+button
+{
+padding:10px 20px;
+font-size:16px;
+border-radius:5px;
+}
+
+</style>
+<body>
+<div class ="containers">
+<h1> change Background color </h1>
+<button id="changecolorbtn"> change backgroundColor</button>
+</div>
+
+</body>
+<script >
+
+const button= document.getElementById('changecolorbtn');
+button.addEventListener('click',backgroundcolor);
+button.addEventListener('dblclick',double);
+
+function backgroundcolor ()
+{
+document.body.style.backgroundColor='red';
+}
+
+function double ()
+{
+document.body.style.backgroundColor='green';
+}
+</script>
+</html>
+	
+

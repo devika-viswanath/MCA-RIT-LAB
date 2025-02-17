@@ -1,0 +1,32 @@
+#striped-table
+{
+width:100%;
+border-collapse:collapse;
+font-family:sans-serif;
+}
+
+#striped-table th
+{
+padding:20px;
+text-align:left;
+color:white;
+background-color:#b22222;
+border:1px solid grey;
+}
+
+#striped-table td
+{
+padding:8px;
+border:1px solid grey;
+}
+
+.even
+{
+background-color:lightgray;
+
+}
+
+tr:hover
+{
+background-color:burlywood;
+}
