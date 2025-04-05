@@ -1,3 +1,4 @@
+//method 1
 import java.util.Scanner;
 
 class Complex {
@@ -47,5 +48,44 @@ public class ComplexNumbers {
         System.out.println("Product: " + product);
         
         scanner.close();
+    }
+}
+
+
+//method 2
+
+import java.util.Scanner;
+class Complex{
+    double a;
+    double b;
+    double c;
+    double d;
+    Complex(double a,double b,double c,double d){
+        this.a=a;
+        this.b=b;
+        this.c=c;
+        this.d=d;
+    }
+    
+}
+public class ComplexNum{
+    public static void main(String arg[]){
+        Scanner obj=new Scanner(System.in);
+        System.out.println("Enter the first complex numbers:");
+        System.out.println("enter a:");
+        double a=obj.nextDouble();
+        System.out.println("enter b:");
+        double b=obj.nextDouble();
+        System.out.println("Enter the second complex numbers:");
+        System.out.println("enter the c:");
+        double c=obj.nextDouble();
+        System.out.println("enter the d:");
+        double d=obj.nextDouble();
+        //sum
+        System.out.println("sum of 2 complex num:");
+        System.out.println((a+c) + "+" + (b+d)+"i" );
+        //product
+        System.out.println("product of 2 complex num:");
+        System.out.println(((a*c)-(b*d)) + "+" +((a*d)+(b*c)) +"i");
     }
 }
