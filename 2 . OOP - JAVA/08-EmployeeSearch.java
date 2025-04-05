@@ -1,3 +1,4 @@
+//method 1
 import java.util.Scanner;
 
 class Employee {
@@ -62,5 +63,57 @@ public class EmployeeSearch {
         }
 
         scanner.close();
+    }
+}
+
+//method 2
+
+import java.util.Scanner;
+class Employee{
+    int empno;
+    String name;
+    double salary;
+    Employee(int empno,String name,double salary){
+
+        this.empno=empno;
+        this.name=name;
+        this.salary=salary;
+    }
+    
+}
+public class EmployeeSearch{
+    public static void main(String arg[]){
+        Scanner obj=new Scanner(System.in); 
+        System.out.println("Enter the number of Employee:");
+        int n=obj.nextInt();
+        obj.nextLine();
+        Employee[] employees=new Employee[n];
+        for(int i=0;i<n;i++){
+                System.out.println("Enter the employee no:");
+                int empno=obj.nextInt();
+                obj.nextLine();
+                System.out.println("Enter the Empname:");
+                String name=obj.nextLine();
+                System.out.println("Enter the salary:");
+                double salary=obj.nextDouble();
+                
+                employees[i]=new Employee(empno,name,salary);}
+        System.out.println("enter the search empno:");
+        int searchnum=obj.nextInt();
+        obj.nextLine();
+        for(int i=0;i<n;i++){
+            if(employees[i].empno==searchnum){
+                System.out.println("Search Employee details:");
+                System.out.println("Employee num:"+employees[i].empno);
+                System.out.println("Employee name:"+employees[i].name);
+                System.out.println("Employee salary:"+employees[i].salary);
+            }
+            else{
+                System.out.println("Employee not found!!!");
+            }
+        }
+        obj.close();
+    
+
     }
 }
