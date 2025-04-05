@@ -1,3 +1,4 @@
+//method 1
 import java.util.Scanner;
 
 class Product {
@@ -49,5 +50,55 @@ public class SimpleProductManager {
         System.out.println("Price: $" + lowestPriceProduct.price);
 
         scanner.close();
+    }
+}
+
+//simple code method 2
+
+import java.util.Scanner;
+class product{
+    int pcode;
+    String pname;
+    double price;
+    product(int pcode,String pname,double price){
+        this.pcode=pcode;
+        this.pname=pname;
+        this.price=price;
+    }
+    void display(){
+        System.out.println("product code:"+pcode);
+        System.out.println("product name:"+pname);
+        System.out.println("product price:"+price);
+    }
+}
+public class ProductLowestprize{
+    public static void main(String arg[]){
+        Scanner obj=new Scanner(System.in);
+        System.out.println("how much employee you want to insert:");
+        int n=obj.nextInt();
+        obj.nextLine();
+        product[] products=new product[n];
+        for(int i=0;i<n;i++){
+            System.out.println("Enter the pcode:");
+            int pcode=obj.nextInt();
+            obj.nextLine();
+            System.out.println("Enter the pname:");
+            String pname=obj.nextLine();
+            System.out.println("Enter the price:");
+            double price=obj.nextDouble();
+            products[i]=new product(pcode,pname,price);
+
+        }
+
+        product lowestprice=products[0];
+        for(int i=1;i<n;i++){
+            if(products[i].price <lowestprice.price){
+                
+                lowestprice=products[i];
+            }
+            
+            
+        }
+        lowestprice.display();
     }
 }
