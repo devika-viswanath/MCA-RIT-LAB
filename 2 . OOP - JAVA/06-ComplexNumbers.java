@@ -89,3 +89,50 @@ public class ComplexNum{
         System.out.println(((a*c)-(b*d)) + "+" +((a*d)+(b*c)) +"i");
     }
 }
+
+//method 3
+
+import java.util.Scanner;
+
+class Complex { double real, imag;
+
+Complex(double r, double i) {
+    this.real = r;
+    this.imag = i;
+}
+
+Complex add(Complex c) {
+    return new Complex(this.real + c.real, this.imag + c.imag);
+}
+
+Complex multiply(Complex c) {
+    return new Complex(this.real * c.real - this.imag * c.imag,
+                       this.real * c.imag + this.imag * c.real);
+}
+
+void display() {
+    System.out.println(real + " + " + imag + "i");
+}
+
+}
+
+public class ComplexNumbers { public static void main(String[] args) { Scanner scanner = new Scanner(System.in);
+
+System.out.print("Enter real and imaginary parts of first complex number: ");
+    double r1 = scanner.nextDouble(), i1 = scanner.nextDouble();
+    Complex c1 = new Complex(r1, i1);
+
+    System.out.print("Enter real and imaginary parts of second complex number: ");
+    double r2 = scanner.nextDouble(), i2 = scanner.nextDouble();
+    Complex c2 = new Complex(r2, i2);
+
+    System.out.print("Sum: ");
+    c1.add(c2).display();
+
+    System.out.print("Product: ");
+    c1.multiply(c2).display();
+
+    scanner.close();
+}
+
+}
