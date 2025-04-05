@@ -1,3 +1,4 @@
+// method1
 import java.util.Scanner;
 
 public class EmployeeSearch {
@@ -39,5 +40,50 @@ public class EmployeeSearch {
         }
 
         scanner.close();
+    }
+}
+
+//method2
+
+import java.util.Scanner;
+class StringCollection{
+    String str;
+    StringCollection(String str){
+        this.str=str;
+
+    }
+    void display(){
+        System.out.println("string:"+str);
+
+    }
+}
+public class StringSearch{
+    public static void main(String arg[]){
+        Scanner obj=new Scanner(System.in);
+       
+        System.out.println("Enter the number of string:");
+        int n=obj.nextInt(); 
+        obj.nextLine();
+         String[] strings=new String[n];
+        for(int i=0;i<n;i++){
+            System.out.println("enter the strings:");
+            String str=obj.nextLine();
+            strings[i]=new String(str);
+            
+            
+        }
+        System.out.println("enter the string to search:");
+        String searchstring=obj.nextLine();
+        for(int i=0;i<n;i++){
+            if(strings[i].equals(searchstring)){
+                System.out.println("string found,String is:"+strings[i]+ ": index :"+ i);
+
+                return;
+            }
+            
+        
+            
+        }
+        System.out.println("string not found");
     }
 }
