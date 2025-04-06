@@ -1,3 +1,4 @@
+//method 1
 import java.io.*;
 import java.util.Scanner;
 
@@ -75,4 +76,65 @@ public class FileOperations {
             System.out.println("Error appending to file: " + e.getMessage());
         }
     }
+}
+
+//method 2
+
+import java.io.*;  
+import java.util.Scanner;  
+
+public class FileOperation {  
+    public static void main(String arg[]) {  
+        Scanner obj = new Scanner(System.in);  
+        String filename = "file.txt"; // Added missing semicolon
+        
+        System.out.println("The menu:");
+        System.out.println("1. Write file");
+        System.out.println("2. Read file");
+        System.out.println("3. Append file");
+        System.out.print("Enter your choice: ");  
+        int choice = obj.nextInt();  
+        obj.nextLine(); // Clear the buffer after reading int  
+
+        if (choice == 1) {  
+            try {  
+                FileWriter filewriter = new FileWriter(filename);  
+                System.out.println("Enter the text to write:");  
+                String text = obj.nextLine();  
+                filewriter.write(text);  
+                filewriter.close();  
+                System.out.println("Text written successfully.");  
+            } catch (IOException error) {  
+                System.out.println("Something went wrong!!!");  
+            }  
+        } else if (choice == 2) {  
+            try {
+                FileReader filereader = new FileReader(filename);  
+                BufferedReader bufferedreader = new BufferedReader(filereader);  
+                String line;  
+                System.out.println("Contents of the file:");  
+                while ((line = bufferedreader.readLine()) != null) {  
+                    System.out.println(line);  
+                }  
+                bufferedreader.close();  
+            } catch (IOException error) {  
+                System.out.println("Something went wrong!!");  
+            }  
+        } else if (choice == 3) {  
+            try {
+                FileWriter filewriter = new FileWriter(filename, true);  
+                System.out.println("Enter text to append:");  
+                String text = obj.nextLine();  
+                filewriter.write(text);  
+                filewriter.close();  
+                System.out.println("Text appended successfully.");  
+            } catch (IOException error) {  
+                System.out.println("Something went wrong:");  
+            }  
+        } else {
+            System.out.println("Invalid choice.");
+        }
+
+        obj.close();  
+    }  
 }
