@@ -1,0 +1,46 @@
+class EvenThread implements Runnable {
+    int limit;
+
+    EvenThread(int limit) {
+        this.limit = limit;
+    }
+
+    public void run() {
+        for (int i = 0; i <= limit; i++) {
+            if (i % 2 == 0) {
+                System.out.println("Even: " + i);
+            }
+        }
+    }
+}
+
+class OddThread implements Runnable {
+    int limit;
+
+    OddThread(int limit) {
+        this.limit = limit;
+    }
+
+    public void run() {
+        for (int i = 0; i <= limit; i++) {
+            if (i % 2 != 0) {
+                System.out.println("Odd: " + i);
+            }
+        }
+    }
+}
+
+public class EvenOddMultithread {
+    public static void main(String[] args) {
+        int limit = 20; // You can change the limit as needed
+
+        Runnable even = new EvenThread(limit);
+        Runnable odd = new OddThread(limit);
+
+        Thread t1 = new Thread(even);
+        Thread t2 = new Thread(odd);
+
+        t1.start();
+        t2.start();
+    }
+}
