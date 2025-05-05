@@ -1,0 +1,31 @@
+ echo Hi! My name is ...
+ //"print working directory".
+  pwd
+/Users/dwight-schrute
+//Change Directory: cd
+ cd directory-name
+ //List Content:
+ ls
+ //Viewing File Content
+ $ cat beets.txt
+I have 100 beets!
+//diagram of how the house directory and its contents are organized:
+
+ house/
+  ├── bathroom/
+  │      └── medicine-cabinet/
+  │            └── items.txt
+  |── bedroom/
+  │      └── closet/
+  │            └── items.txt
+  ├── dining-room/
+  │      └── cabinet/
+  |            └── items.txt
+  ├── kitchen/
+  │      ├── fridge/
+  │      │     └── items.txt
+  │      └── pantry/
+  │            └── items.txt
+  └── living-room/
+        └── shelf/
+              └── books.txt
