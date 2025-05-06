@@ -1,0 +1,87 @@
+-- A. Consider the database for a college. Write SQL commands to implement the following:
+
+-- 1. Create a database
+CREATE DATABASE college;
+
+-- 2. Select the current database
+USE college;
+
+-- 3. Create the following tables:
+-- a) Student (roll_no integer, name varchar, dob date, address text, phone_no varchar, blood_grp varchar)
+CREATE TABLE Student(
+    Roll_no INT, 
+    Name VARCHAR(20), 
+    DoB DATE, 
+    Address TEXT, 
+    Phone_no VARCHAR(10), 
+    blood_grp VARCHAR(3)
+);
+
+-- b) Course (Course_id integer, Course_name varchar, course_duration integer)
+CREATE TABLE Course(
+    course_id INT, 
+    course_name VARCHAR(20), 
+    course_duration INT
+);
+
+-- 4. List all tables in the current database
+SHOW TABLES;
+
+-- 5. Display the structure of the Student table.
+DESC Student;
+
+-- 6. Drop the column blood_grp from Student table.
+ALTER TABLE Student DROP COLUMN blood_grp;
+
+-- 7. Add a new column Adar_no with domain number to the table Student.
+ALTER TABLE Student ADD Adar_no INT(20);
+
+-- 8. Change the datatype of phone_no from varchar to int
+ALTER TABLE Student MODIFY Phone_no INT;
+
+-- 9. Drop the tables.
+DROP TABLE Course;
+
+-- 10. Delete the database
+DROP DATABASE college;
+
+-- B. Consider the database for an organization. Write SQL commands to implement the following:
+
+-- 1. Create a database
+CREATE DATABASE organization;
+
+-- 2. Select the current database
+USE organization;
+
+-- 3. Create the following tables:
+-- a) Employee (emp_no varchar, emp_name varchar, dob date, address text, mobile_no integer, dept_no varchar, salary integer)
+CREATE TABLE Employee(
+    Emp_no VARCHAR(10), 
+    Emp_name VARCHAR(30), 
+    DoB DATE, 
+    Address TEXT, 
+    Mobile_no INT, 
+    Dept_no VARCHAR(10), 
+    Salary INT
+);
+
+-- b) Department (dept_no varchar, dept_name varchar, location varchar)
+CREATE TABLE Department(
+    Dept_no VARCHAR(10), 
+    Dept_name VARCHAR(30), 
+    Location VARCHAR(30)
+);
+
+-- 4. List all tables in the current database
+SHOW TABLES;
+
+-- 5. Display the structure of the Employee table and Department table
+DESC Employee;
+
+DESC Department;
+
+-- 6. Add a new column ‘Designation’ to the table Employee
+ALTER TABLE Employee ADD Designation VARCHAR(30);
+
+-- 7. Drop the column ‘location’ from Department table.
+ALTER TABLE Department DROP COLUMN Location;
