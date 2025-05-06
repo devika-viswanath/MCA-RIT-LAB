@@ -1,0 +1,317 @@
+-- 1. Write a stored procedure to read three numbers and find the greatest among them.
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS FindGreatestNumber;
+CREATE PROCEDURE FindGreatestNumber(
+IN a INT,
+IN b INT,
+IN c INT,
+OUT greatest INT
+)
+BEGIN
+IF a >= b AND a >= c THEN
+SET greatest = a;
+ELSEIF b >= a AND b >= c THEN
+SET greatest = b;
+ELSE
+SET greatest = c;
+END IF;
+END $$
+DELIMITER ;
+
+-- 2. Write a stored procedure to read two numbers and print all the numbers between them.
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS PRINT_NUMBERS;
+CREATE PROCEDURE PRINT_NUMBERS(IN a INT,IN b INT)
+BEGIN
+DECLARE counter INT;
+DECLARE RESULT VARCHAR(100);
+SET counter = LEAST(a,b);
+SET RESULT = " ";
+num: LOOP
+SET RESULT = CONCAT(RESULT,counter,' ');
+SET counter=counter+1;
+IF counter >= GREATEST (a,b) THEN
+LEAVE num;
+END IF;
+END LOOP;
+SELECT RESULT AS numbers;
+END $$
+DELIMITER ;
+
+-- 3. Write a stored procedure to read N and find the sum of the series 1+2+3 +... N
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS SumSeries;
+CREATE PROCEDURE SumSeries(IN a INT, OUT sum INT)
+BEGIN
+DECLARE counter INT DEFAULT 1;
+DECLARE total INT DEFAULT 0;
+WHILE counter <= a DO
+SET total = total + counter;
+SET counter = counter + 1;
+END WHILE;
+SET sum = total;
+END$$
+DELIMITER ;
+
+-- 4. Write a stored procedure to read a mark and display the grade
+
+DELIMITER //
+CREATE PROCEDURE GetGrades(IN mark INT)
+BEGIN
+DECLARE grade VARCHAR(10);
+IF mark >= 90 THEN
+SET grade = 'A';
+ELSEIF mark >= 75 THEN
+SET grade = 'B';
+ELSEIF mark >= 60 THEN
+SET grade = 'C';
+ELSEIF mark >= 40 THEN
+SET grade = 'D';
+ELSE
+SET grade = 'F';
+END IF;
+SELECT grade AS Grade;
+END //
+DELIMITER ;
+
+-- 5. Write a stored procedure to read a number and invert the given number
+
+DELIMITER //
+CREATE PROCEDURE InvertNumbers(IN num INT)
+BEGIN
+DECLARE reversed INT DEFAULT 0;
+DECLARE remainder INT;
+WHILE num > 0 DO
+SET remainder = num % 10;
+SET reversed = reversed * 10 + remainder;
+SET num = num DIV 10;
+END WHILE;
+SELECT reversed AS InvertedNumber;
+END //
+DELIMITER ;
+
+-- 6. Create a procedure which will receive account_id and amount to withdraw. If the account does not exist, it will display a message. Otherwise, if the account exists, it will allow the withdrawal only if the new balance after the withdrawal is at least 1000.
+
+DELIMITER //
+CREATE PROCEDURE WithdrawAmount(
+IN acc_id INT,
+IN amount DECIMAL(10,2)
+)
+BEGIN
+DECLARE current_balance DECIMAL(10,2);
+SELECT balance INTO current_balance
+FROM accounts
+WHERE account_id = acc_id;
+IF current_balance IS NULL THEN
+SELECT 'Account does not exist' AS Message;
+ELSEIF (current_balance - amount) < 1000 THEN
+SELECT 'Insufficient balance. Must maintain at least 1000.' AS Message;
+ELSE
+UPDATE accounts
+SET balance = balance - amount
+WHERE account_id = acc_id;
+SELECT 'Withdrawal successful' AS Message;
+END IF;
+END //
+DELIMITER ;
+
+-- 7. Create a ‘Customer’ table with attributes customer id, name, city and credits.
+-- Write a stored procedure to display the details of a particular customer from the customer table, where name is passed as a parameter.
+
+DELIMITER //
+CREATE PROCEDURE GetsCustomerDetails(IN cust_name VARCHAR(50))
+BEGIN
+SELECT * FROM Customer WHERE name = cust_name;
+END //
+DELIMITER ;
+
+-- 8. Create a stored procedure to determine membership of a particular customer based on the following credits: Above 5000 = Membership Platinum 1000 to 5000 = Gold < 1000 = silver [Use IN and OUT Parameters]
+
+DELIMITER //
+CREATE PROCEDURE GetMembership(
+IN credit INT,
+OUT membership VARCHAR(20)
+)
+BEGIN
+IF credit > 5000 THEN
+SET membership = 'Platinum';
+ELSEIF credit >= 1000 THEN
+SET membership = 'Gold';
+ELSE
+SET membership = 'Silver';
+END IF;
+END //
+DELIMITER ;
+
+-- 9. Create a function to accept the Id of an employee and return his salary
+
+DELIMITER //
+CREATE FUNCTION GetSalary(empID INT)
+RETURNS DECIMAL(10,2)
+DETERMINISTIC
+BEGIN
+DECLARE sal DECIMAL(10,2);
+SELECT salary INTO sal
+FROM employees
+WHERE emp_id = empID;
+RETURN sal;
+END //
+DELIMITER ;
+
+-- 10. Write a function that takes employee name as parameter and returns the number of employees with this name. Use the function to update details of employees with unique names. For other cases, the program (not the function) should display error messages - “No Employee” or “Multiple employees”.
+
+DELIMITER //
+CREATE FUNCTION CountByName(emp_name VARCHAR(50))
+RETURNS INT
+DETERMINISTIC
+BEGIN
+DECLARE count_emp INT;
+SELECT COUNT(*) INTO count_emp
+FROM employees
+WHERE name = emp_name;
+RETURN count_emp;
+END //
+DELIMITER ;
+
+-- 11. Write a stored procedure using cursor to calculate salary of each employee.
+-- Consider an Emp_salary table have the following attributes emp_id, emp_name, no_of_working_days, designation and salary
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS SALARY;
+CREATE PROCEDURE SALARY()
+BEGIN
+DECLARE finished INTEGER DEFAULT 0;
+DECLARE idy VARCHAR(10);
+DECLARE desig VARCHAR(20);
+DECLARE days INT;
+DECLARE sal INT;
+DECLARE curSal CURSOR FOR SELECT
+EMP_NO,CADRE,DAYS_WORKED FROM EMP;
+DECLARE CONTINUE HANDLER FOR NOT FOUND SET finished = 1;
+OPEN curSal;
+L1 : LOOP
+FETCH curSal INTO idy,desig,days;
+IF finished = 1 THEN
+LEAVE L1;
+END IF;
+IF(desig = 'AP') THEN
+SET sal = days * 1750;
+ELSEIF(desig = 'PR') THEN
+SET sal = days * 1250;
+ELSEIF(desig = 'CL') THEN
+SET sal = days * 750;
+END IF;
+UPDATE EMP SET SALARY=sal WHERE EMP_NO=idy;
+END LOOP L1;
+CLOSE curSal;
+END $$
+DELIMITER ;
+
+-- 12. Write a procedure to calculate the electricity bill of all customers. Electricity board charges the following rates to domestic uses to find the consumption of energy.
+-- a) For first 100 units Rs:2 per unit. 
+-- b) 101 to 200 units Rs:2.5 per unit.
+-- c) 201 to 300 units Rs: 3 per unit. 
+-- d) Above 300 units Rs: 4 per unit 
+-- Consider the table ‘Bill’ with fields customer_id, name, pre_reading, cur_reading , unit, and amount
+
+DELIMITER $$
+CREATE PROCEDURE Calculate_Bill()
+BEGIN
+DECLARE done INT DEFAULT FALSE;
+DECLARE v_id INT;
+DECLARE v_units INT;
+DECLARE v_amount DECIMAL(10,2);
+DECLARE v_name VARCHAR(100);
+DECLARE v_pre INT;
+DECLARE v_cur INT;
+DECLARE cur CURSOR FOR SELECT customer_id, name, pre_reading, cur_reading FROM Bill;
+DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+OPEN cur;
+read_loop: LOOP
+FETCH cur INTO v_id, v_name, v_pre, v_cur;
+IF done THEN
+LEAVE read_loop;
+END IF;
+SET v_units = v_cur - v_pre;
+SET v_amount = 0;
+IF v_units <= 100 THEN
+SET v_amount = v_units * 2;
+ELSEIF v_units <= 200 THEN
+SET v_amount = (100 * 2) + ((v_units - 100) * 2.5);
+ELSEIF v_units <= 300 THEN
+SET v_amount = (100 * 2) + (100 * 2.5) + ((v_units - 200) * 3);
+ELSE
+SET v_amount = (100 * 2) + (100 * 2.5) + (100 * 3) + ((v_units - 300) * 4);
+END IF;
+UPDATE Bill
+SET unit = v_units,
+amount = v_amount
+WHERE customer_id = v_id;
+END LOOP;
+CLOSE cur;
+END$$
+DELIMITER ;
+
+-- 13. Create a trigger on employee table such that whenever a row is deleted, it is moved to history table named ‘Emp_history’ with the same structure as employee table. ‘Emp_history’ will contain an additional column “Date_of_deletion” to store the date on which the row is removed. [After Delete Trigger]
+
+DELIMITER $$
+CREATE TRIGGER after_employee_delete
+AFTER DELETE ON employee
+FOR EACH ROW
+BEGIN
+INSERT INTO Emp_history(emp_id, emp_name, designation, salary, Date_of_deletion)
+VALUES (OLD.emp_id, OLD.emp_name, OLD.designation, OLD.salary, CURDATE());
+END $$
+DELIMITER ;
+
+-- 14. Before insert a new record in emp_details table, create a trigger that check the column value of FIRST_NAME, LAST_NAME, JOB_ID and if there are any space(s) before or after the FIRST_NAME, LAST_NAME, TRIM () function will remove those. The value of the JOB_ID will be converted to upper cases by UPPER () function. [Before Insert Trigger]
+
+DELIMITER $$
+CREATE TRIGGER before_insert_details
+BEFORE INSERT ON emp_details
+FOR EACH ROW
+BEGIN
+SET NEW.first_name = TRIM(NEW.first_name);
+SET NEW.last_name = TRIM(NEW.last_name);
+SET NEW.job_id = UPPER(TRIM(NEW.job_id));
+END $$
+DELIMITER ;
+
+-- 15. Consider the following table with sample data. Create a trigger to calculate total marks, percentage and grade of the students, when marks of the subjects are updated. [After Update Trigger]
+-- For this sample calculation, the following conditions are assumed: 
+-- Total Marks (will be stored in TOTAL column) : TOTAL = SUB1 + SUB2 + SUB3 + SUB4 + SUB5. 
+-- Percentage of Marks (will be stored in PER_MARKS column): PER_MARKS = (TOTAL)/5 
+-- Grade (will be stored in GRADE column):
+-- If PER_MARKS>=90 -> 'EXCELLENT'
+-- If PER_MARKS>=75 AND PER_MARKS 'VERY GOOD'
+-- If PER_MARKS>=60 AND PER_MARKS 'GOOD' 
+-- If PER_MARKS>=40 AND PER_MARKS 'AVERAGE' 
+-- If PER_MARKS 'NOT PROMOTED’
+
+DELIMITER $$
+CREATE TRIGGER trg_after_update_marks
+AFTER UPDATE ON students
+FOR EACH ROW
+BEGIN
+DECLARE total INT;
+DECLARE per_marks DECIMAL(5,2);
+DECLARE grade VARCHAR(20);
+SET total = NEW.Sub1 + NEW.Sub2 + NEW.Sub3 + NEW.Sub4 + NEW.Sub5;
+SET per_marks = total / 5;
+IF per_marks >= 90 THEN
+SET grade = 'EXCELLENT';
+ELSEIF per_marks >= 75 THEN
+SET grade = 'VERY GOOD';
+ELSEIF per_marks >= 60 THEN
+SET grade = 'GOOD';
+ELSEIF per_marks >= 40 THEN
+SET grade = 'AVERAGE';
+ELSE
+SET grade = 'NOT PROMOTED';
+END IF;
+UPDATE students SET Total = total,Per_Marks = per_marks,Grade = grade WHERE Stud_id= NEW.Stud_id;
+END$$
+DELIMITER ;
