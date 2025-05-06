@@ -1,0 +1,36 @@
+-- 1. Create new table Persons with attributes PersonID (integer, PRIMARY KEY),
+-- Name (varchar, NOT NULL), Aadhar (Number, NOT NULL, UNIQUE), Age (integer, CHECK>18)
+CREATE TABLE Persons(
+    PersonID INT PRIMARY KEY, 
+    Name VARCHAR(30) NOT NULL, 
+    Aadhar INT NOT NULL UNIQUE, 
+    Age INT CHECK(Age > 18)
+);
+
+-- 2. CREATE TABLE Orders with attributes OrderID (PRIMARY KEY),
+-- OrderNumber(NOT NULL) and PersonID (set FOREIGN KEY on attribute PersonID referencing the column PersonId of Person table)
+CREATE TABLE Orders(
+    OrderID INT PRIMARY KEY, 
+    OrderNumber INT NOT NULL, 
+    PersonID INT, 
+    FOREIGN KEY(PersonID) REFERENCES Persons(PersonID)
+);
+
+-- 3. Display the structure of Orders tables
+DESC Persons;
+
+-- 4. Add emp_no as the primary key of the table Employee
+DESC Orders;
+
+-- 5. Add emp_no as the primary key of the table Employee
+ALTER TABLE Employee MODIFY Emp_no VARCHAR(10) PRIMARY KEY;
+
+-- 6. Add dept_no as the primary key of the table Department
+ALTER TABLE Department MODIFY Dept_no VARCHAR(10) PRIMARY KEY;
+
+-- 7. Add dept_no in Employee table as the foreign key reference to the table Department with on delete cascade.
+ALTER TABLE Employee 
+ADD CONSTRAINT FK_Dept FOREIGN KEY(Dept_no) REFERENCES Department(Dept_no) ON DELETE CASCADE;
+
+-- 8. Drop the primary key of the table Orders.
+ALTER TABLE Orders DROP PRIMARY KEY;
