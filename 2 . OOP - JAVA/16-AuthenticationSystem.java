@@ -58,3 +58,49 @@ public class AuthenticationSystem {
         }
     }
 }
+//meethod mine
+import java.util.Scanner;
+import java.io.*;
+class AuthenticationException extends Exception{
+    public AuthenticationException(String message){
+        super(message);
+    }
+}
+public class ExceptionDemo{
+    public static void readFile(String filename){
+        try(BufferedReader reader=new BufferedReader(new FileReader(filename))){
+            String line;
+            while((line=reader.readLine())!=null){
+                System.out.println(line);
+            }
+        }catch(FileNotFoundException e){
+            
+        }catch(IOException e){
+
+        }
+    }
+    public static void Authenticate(String username,String password) throws AuthenticationException{
+        if(!username.equals("admin") || !password.equals("admin123")){
+            throw new AuthenticationException("incorrect username or password");
+        }
+
+    }
+    public static void main(String arg[]){
+        Scanner obj=new Scanner(System.in);
+        String filename="file.txt";
+        readFile(filename);
+        System.out.println("Eneter the username:");
+        String username=obj.nextLine();
+        System.out.println("Enter the password:");
+        String password=obj.nextLine();
+        try{
+            Authenticate(username,password);
+            System.out.print("WELCOME"+username);
+        }catch(AuthenticationException e){
+            System.out.println("Error!!try again..");
+
+        }
+        obj.close();
+
+    }
+}
