@@ -79,3 +79,67 @@ public class MultiThreadingExample {
         scanner.close();
     }
 }
+//method 2 mine
+import java.util.Scanner;
+class Multiplication extends Thread{//implements Runnable
+    int num;
+    Multiplication(int num){
+        this.num=num;
+    }
+    public void run(){
+        for(int i=1;i<=10;i++){
+            int product=num*i;
+            System.out.println(i+"x"+num+"="+product);
+            try{
+                Thread.sleep(300);
+            }
+            catch(InterruptedException e){
+                System.out.println("error");
+            }
+        }
+    }
+}
+class PrimeNums extends Thread{
+    int limit;
+    PrimeNums(int limit){
+        this.limit=limit;
+
+    }
+    public void run(){
+        for(int numb=2;numb<=limit;numb++){
+            boolean isPrime=true;
+            for(int i=2;i<=numb/2;i++){
+                if(numb%i==0){
+                    isPrime=false;
+                    break;
+                }
+
+            }
+            if(isPrime){
+                System.out.println("primes:"+numb);
+                try{
+                    Thread.sleep(200);
+                }
+                catch(InterruptedException e){
+                    System.out.println("error");
+                }
+            }
+
+
+        }
+    }
+}
+public class MultiplicationPrimeThread{
+    public static void main(String arg[]){
+        Scanner obj=new Scanner(System.in);
+        int num=3;
+        int limit=30;
+        Multiplication m=new Multiplication(num);
+        //Thread mu= new Thread(m);mu.start(); //we use create thread use runnable create object like that..!!
+        PrimeNums p=new PrimeNums(limit);
+        m.start();
+        p.start();
+         obj.close();
+    }
+   
+}
