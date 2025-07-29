@@ -1,4 +1,4 @@
-//
+//Develop an android mobile application to display your details – Name, Class  , Address , Photo etc. (use of font colors, size, style...)
 package com.example.displaydetails;
 
 import android.os.Bundle;
