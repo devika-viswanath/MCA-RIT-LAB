@@ -1,3 +1,5 @@
+// 1. Develop an android mobile application that display date and time on a Button click in text boxes. 
+    
 package com.example.datetimedisplayapp;
 
 import androidx.appcompat.app.AppCompatActivity;
