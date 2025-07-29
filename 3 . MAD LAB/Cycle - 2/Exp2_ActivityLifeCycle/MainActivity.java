@@ -1,3 +1,5 @@
+// 2. Develop an android mobile application to demonstrate activity life cycle
+
 package com.example.lifecycleapp;
 
 import android.os.Bundle;
