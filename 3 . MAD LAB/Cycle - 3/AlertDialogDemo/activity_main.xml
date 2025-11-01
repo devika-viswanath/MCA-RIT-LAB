@@ -1,12 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     android:orientation="vertical"
-    android:padding="20dp">
+    android:padding="16dp"
+    android:gravity="center">
 
     <Button
-        android:id="@+id/btnAlert"
+        android:id="@+id/show_dialog_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Show Alert Dialog" />
