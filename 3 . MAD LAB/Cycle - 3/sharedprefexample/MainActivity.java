@@ -1,59 +1,50 @@
-package com.example.sharedprefexample;  // Make sure this matches your app's package!
+package com.example.sharedpref;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
-
-    EditText etUsername, etAge;
-    Button btnSave;
-    TextView tvDisplay;
-
-    SharedPreferences sharedPreferences;
-    private static final String PREF_NAME = "user_prefs";
-    private static final String KEY_USERNAME = "username";
-    private static final String KEY_AGE = "age";
+//Declaration
+//    EditText etUsername, etAge;
+//    Button btnSave;
+//    TextView tvResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main); // R.layout refers to your layout xml
+        setContentView(R.layout.activity_main);
 
-        etUsername = findViewById(R.id.etUsername);
-        etAge = findViewById(R.id.etAge);
-        btnSave = findViewById(R.id.btnSave);
-        tvDisplay = findViewById(R.id.tvDisplay);
+        // Declare + initialize in one line
+        EditText etUsername = findViewById(R.id.etUsername);
+        EditText etAge = findViewById(R.id.etAge);
+        Button btnSave = findViewById(R.id.btnSave);
+        TextView tvResult = findViewById(R.id.tvResult);
 
-        sharedPreferences = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
-        loadData();
+        // SharedPreferences object
+        SharedPreferences prefs = getSharedPreferences("MyPrefs", MODE_PRIVATE);
 
-        btnSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) { saveData(); }
+        // Load saved data
+        String name = prefs.getString("username", "");
+        int age = prefs.getInt("age", 0);
+        if (!name.isEmpty()) {
+            tvResult.setText("Username: " + name + "\nAge: " + age);
+        }
+
+        // Save button click
+        btnSave.setOnClickListener(v -> {
+            String username = etUsername.getText().toString();
+            int userAge = Integer.parseInt(etAge.getText().toString());
+
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putString("username", username);
+            editor.putInt("age", userAge);
+            editor.apply();
+
+            tvResult.setText("Username: " + username + "\nAge: " + userAge);
         });
-    }
-
-    private void saveData() {
-        String username = etUsername.getText().toString();
-        String age = etAge.getText().toString();
-
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(KEY_USERNAME, username);
-        editor.putString(KEY_AGE, age);
-        editor.apply();
-
-        tvDisplay.setText("Saved Username: " + username + "\nSaved Age: " + age);
-    }
-
-    private void loadData() {
-        String username = sharedPreferences.getString(KEY_USERNAME, "No Username");
-        String age = sharedPreferences.getString(KEY_AGE, "No Age");
-
-        tvDisplay.setText("Username: " + username + "\nAge: " + age);
     }
 }
