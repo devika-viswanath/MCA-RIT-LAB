@@ -52,9 +52,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main); //link to xml
-        Button btnOpenBrowser =findViewById(R.id.btnOpenBrowser);
+        Button buttonOpenBrowser =findViewById(R.id.buttonOpenBrowser);
 
-        btnOpenBrowser.setOnClickListener(v -> {
+        buttonOpenBrowser.setOnClickListener(v -> {
 
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setData(Uri.parse("https://www.google.com"));
